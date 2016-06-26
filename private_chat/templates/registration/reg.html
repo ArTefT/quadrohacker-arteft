@@ -1,10 +1,15 @@
-<DOCTYPE html>
-<head>
-    <title> Registrations </title>
+<!DOCTYPE html>
+    <head>
+        <title> Registrations </title>
     </head>
     <body>
-<form method='post' action="">
-{% csrf_token %}
-{{ form.as_p }}
-<button type="submit">Registrarions</button>
-</form>
+    {% block body %}
+        <h2>Sign Up</h2>
+        <form method='post' action="" style="margin-top: 4%;">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Registrarions</button>
+        </form>
+    {% endblock %}
+    </body>
+
