@@ -1,7 +1,12 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.contrib.auth.models import User 
 from .forms import UserForm
 import models
+import random
+import string
+from django.contrib.auth import authenticate, login
+
 # Create your views here.
 
 def registration(request):
@@ -9,10 +14,28 @@ def registration(request):
     if request.method == 'GET':
         return render(request, 'registration/reg.html', {'form':form})
     if request.method == 'POST':
-        username = request.POST['username']
-        email = request.POST['email']
-        password = request.POST['password']
-        user = models.UserProfile(username=username, email=email, password=password, user=None)
-        user.save()
-        return render(request, 'registration/reg.html', {'form':form})
-              
+		#print request.POST
+		username = request.POST['username']
+		email = request.POST['email']
+		password = request.POST['password']
+		if password == '':
+			password = password.join(random.choice(string.ascii_uppercase + string.ascii_lowercase + string.digits) for x in range(8))
+		user = User.objects.create_user(username, email, password) 
+		userprofile = models.UserProfile(username=username, email=email, password=password, user=user)
+		userprofile.save()
+		return render(request, 'registration/reg.html', {'form':form})
+
+def login(request):
+	form = LoginForm(data=request.POST or None)
+	username = request.POST['username']
+	password = request.POST['password']
+	if request.method == 'POST':
+	user = autheniticate(username=username, password=password)
+	if user is not None:
+		if user.is_active:
+			login(request, user)
+		else:
+			return render(request, 'registration/login.html', {'form':form})
+	else:
+		return render(request, 'registration/login.html', {'form':form})
+		 
