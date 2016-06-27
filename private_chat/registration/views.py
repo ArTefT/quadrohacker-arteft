@@ -6,6 +6,7 @@ import models
 import random
 import string
 from django.contrib.auth import authenticate, login
+from django.db import IntegrityError
 
 # Create your views here.
 
@@ -20,7 +21,10 @@ def registration(request):
 		password = request.POST['password']
 		if password == '':
 			password = password.join(random.choice(string.ascii_uppercase + string.ascii_lowercase + string.digits) for x in range(8))
-		user = User.objects.create_user(username, email, password) 
+		try:
+			user = User.objects.create_user(username, email, password) 
+		except IntegrityError:
+			return HttpResponse("<h1>Please, enter another username.</h1>")
 		userprofile = models.UserProfile(username=username, email=email, password=password, user=user)
 		userprofile.save()
 		return render(request, 'registration/reg.html', {'form':form})
@@ -30,7 +34,7 @@ def login(request):
 	username = request.POST['username']
 	password = request.POST['password']
 	if request.method == 'POST':
-	user = autheniticate(username=username, password=password)
+		user = autheniticate(username=username, password=password)
 	if user is not None:
 		if user.is_active:
 			login(request, user)
