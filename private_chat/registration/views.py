@@ -9,8 +9,6 @@ import string
 from django.contrib.auth import authenticate, login
 from django.db import IntegrityError
 
-# Create your views here.
-
 def registration(request):
     form = UserForm(data=request.POST or None)
     if request.method == 'GET':

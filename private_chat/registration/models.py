@@ -1,7 +1,5 @@
 from django.db import models
 
-# Create your models here.
-
 class UserProfile(models.Model):
 	user = models.OneToOneField('auth.User', blank=True, null=True, default=None)
 	username = models.CharField(max_length=32, blank=True, null=True)
@@ -10,4 +8,3 @@ class UserProfile(models.Model):
 
 	def __unicode__(self):
 		return self.username
-		
