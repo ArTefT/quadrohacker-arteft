@@ -1,7 +1,8 @@
+# -*- coding: utf-8 -*-
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.models import User 
-from .forms import UserForm
+from .forms import UserForm, LoginForm
 import models
 import random
 import string
@@ -29,17 +30,21 @@ def registration(request):
 		userprofile.save()
 		return render(request, 'registration/reg.html', {'form':form})
 
-def login(request):
-	form = LoginForm(data=request.POST or None)
-	username = request.POST['username']
-	password = request.POST['password']
-	if request.method == 'POST':
-		user = autheniticate(username=username, password=password)
-	if user is not None:
-		if user.is_active:
-			login(request, user)
-		else:
-			return render(request, 'registration/login.html', {'form':form})
-	else:
-		return render(request, 'registration/login.html', {'form':form})
+def login_view(request):
+    form = LoginForm(data=request.POST or None)
+    #сдесь ты данные из POST не достанешь нужно после if request.method == 'POST'
+    #username = request.POST['username']
+	#password = request.POST['password']
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            if user.is_active:
+                login(request, user)
+                return HttpResponseRedirect('/')
+        else:
+            return render(request, 'registration/login.html', {'form':form})
+    else:
+        return render(request, 'registration/login.html', {'form':form})
 		 
