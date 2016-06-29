@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 from django import forms
+from django.contrib.auth.models import User 
+from django.core.validators import RegexValidator
 from .models import UserProfile
 
 
@@ -11,28 +13,13 @@ class UserForm(forms.ModelForm):
         fields = ['username', 'email', 'password', 'password_confirmation']
         widgets = {'password': forms.PasswordInput()}
 
-    def validate_username(self):
-        '''
-            проверяем уникальность пользователя
-        '''
-        username = self.cleanded_data["username"]
-        try:
-            User.objects.get(username=username)  # тут пытаеися получить юзера
-            raise forms.ValidationError("This username has already been created.")  #если получили значит такой есть и делаем исключение
-        except:
-            return username  #если не найден -- создаем его
-		
-    def validate_passwords(self): 
-        '''  
-            проверяем что password == password_confirmation
-        '''
-        password = self.cleaned_data['password']
-        confirm = self.cleaned_data['password_confirmation']
-        if password == confirm:
-            return password
-        else:
-            raise forms.ValidationError('password mismath')
-
+    def clean(self): # сдесь происходит валидация пароля
+        cleaned_data = super(UserForm, self).clean()                     # переопреледением метода clean() 
+        username = cleaned_data.get('username')
+        password = cleaned_data.get('password')
+        confirm = cleaned_data.get('password_confirmation')
+        if password != confirm:                                             # и при несовпадении
+            raise forms.ValidationError({'password': 'Passwords mismatch'}) # бросаем исключение
 
 
 class LoginForm(forms.Form):

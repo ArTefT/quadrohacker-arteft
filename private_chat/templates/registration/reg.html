@@ -4,6 +4,9 @@
     </head>
     <body>
     {% block body %}
+    {% if message %}
+        {{ message }}
+    {% endif %}
         <h2>Sign Up</h2>
         <form method='post' action="" style="margin-top: 4%;">
             {% csrf_token %}
