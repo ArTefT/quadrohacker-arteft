@@ -1,4 +1,9 @@
 from django.contrib import admin
-from .models import UserProfile
+import models
 
-admin.site.register(UserProfile)
+#admin.site.register(UserProfile)
+
+@admin.register(models.UserProfile)
+class UserProfileAdmin(admin.ModelAdmin):
+    list_display = ['username', 'email']
+    readonly_fields = ['username', 'email', 'password']

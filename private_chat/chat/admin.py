@@ -1,4 +1,9 @@
 from django.contrib import admin
-from .models import UserMessage
+import models
 
-admin.site.register(UserMessage)
+@admin.register(models.UserMessage)
+class MessageAdmin(admin.ModelAdmin):
+    list_display = ['autor', 'date_message']
+    
+    readonly_fields = ['autor']
+#admin.site.register(models.UserMessage)
