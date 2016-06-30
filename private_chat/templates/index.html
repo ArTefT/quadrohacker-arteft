@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<head>
+    {% block head %}
+    <title>Welcome</title>
+    {% endblock %}
+</head>
+<body>
+    {% block body %}
+    <h1> Welcome to our private chat </h1>
+    <h2>To continue please <a href="{% url 'login'%}">login</a> or <a href="{% url 'reg'%}">register</a></h2>
+    {% endblock %}
+</body>

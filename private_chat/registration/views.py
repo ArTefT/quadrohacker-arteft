@@ -10,6 +10,11 @@ import string
 from django.contrib.auth import authenticate, login
 from django.db import IntegrityError
 
+def home(request): # корневая страница
+    if request.user.is_authenticated(): # если юзер уже залогинен
+        return HttpResponseRedirect('/chat/') # отправляем в чат
+    return render(request, 'index.html')
+
 def random_password():
     password = ''.join(random.choice(string.ascii_uppercase + string.ascii_lowercase + string.digits) for x in range(8))
     return password
