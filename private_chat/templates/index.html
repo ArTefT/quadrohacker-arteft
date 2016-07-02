@@ -1,12 +1,48 @@
 <!DOCTYPE html>
-<head>
+<head>  
     {% block head %}
     <title>Welcome</title>
     {% endblock %}
+    <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+<style>
+    body {
+        background: #1C1C1C;
+        color: #E8E8E8;
+    }
+    a:hover {
+        color: #00BFFF;
+    }
+    h1 {
+        font-size: 80px;
+    }
+    h2 {
+        font-size: 50px;
+    }
+    {% block style %}
+    
+    #table-cell {
+        text-align: center;
+        padding-top: 30%;
+    }
+
+    {% endblock %}
+    </style>  
 </head>
 <body>
     {% block body %}
-    <h1> Welcome to our private chat </h1>
-    <h2>To continue please <a href="{% url 'login'%}">login</a> or <a href="{% url 'reg'%}">register</a></h2>
+    <div class="container">
+        <div class="row"></div>
+            <div class="span12" id="table-cell">
+                <h1> Welcome to our private chat </h1>
+                <h2>To continue please <a href="{% url 'login'%}">login</a> or <a href="{% url 'reg'%}">register</a></h2>
+            </div>
+    </div>
     {% endblock %}
+    
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 </body>

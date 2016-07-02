@@ -1,18 +1,51 @@
-<!DOCTYPE html>
-    <head>
-        <title> Registrations </title>
-    </head>
-    <body>
-    {% block body %}
-    {% if message %}
-        {{ message }}
-    {% endif %}
-        <h2>Sign Up</h2>
-        <form method='post' action="" style="margin-top: 4%;">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit">Registrarions</button>
-        </form>
-    {% endblock %}
-    </body>
-
+{% extends "index.html" %}
+{% block head %}
+    <title> Registrations </title>
+{% endblock %}
+{% block body %}
+    <div class="container">
+        <div class='row'>
+            <div class='col-md-12'>
+                <h2 class="modal-title"><center>Sign Up</center></h2>
+                {% if message %}
+                    {{ message }}
+                {% endif %}
+		<form action="" method="post">
+		{{ form.non_field_errors }} {% csrf_token %}
+			    <div class="col-md-6 col-md-offset-4" style="padding-top: 50px;">
+				<div id="div_id_username" class="form-group">
+				    <label for="{{ form.username.label_for_id }}" class="control-label requiredField">
+					Username</label><br>
+				    {{form.username.errors}} {{ form.username }}
+				</div>
+			    </div>
+			    <div class="col-md-6 col-md-offset-4">
+				<div id="div_id_email" class="form-group">
+				    <label for="{{ form.email.label_for_id }}" class="control-label requiredField">
+					Email</label><br>
+				    {{ form.email.errors }} {{ form.email }}
+				</div>
+			    </div>
+			    <div class="col-md-6 col-md-offset-4">
+				<div id="div_id_password" class="form-group">
+				    <label for="{{ form.password.label_for_id }}" class="control-label requiredField">
+					Password</label><br>
+				    {{ form.password.errors }} {{ form.password }}
+				</div>
+			    </div>
+			    <div class="col-md-6 col-md-offset-4">
+				<div id="div_id_pssword_confirmation" class="form-group">
+				    <label for="{{ form.password_confirmation.label_for_id }}" class="control-label  requiredField">
+					Password confirmation</label><br>
+				    {{ form.password_confirmation.errors }} {{ form.password_confirmation }}
+				</div>
+				<div class ='btn-wrap' style="padding-bottom: 50px;">
+				    <button type="submit" class="btn btn-large btn-primary">Sign Up</button>
+			    </div>
+			    </div>
+			    
+		</form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
